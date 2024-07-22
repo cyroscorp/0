@@ -1,1 +1,1 @@
-alert('hi i am arjun congratulations for coming this far')
+alert('welcome to this revolution // yours truly // Arjun Sensei')
