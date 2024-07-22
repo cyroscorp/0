@@ -1,1 +1,1 @@
-alert('welcome to this revolution // yours truly // Arjun Sensei')
+alert('welcome to this revolution mate // yours truly // Arjun Sensei')
