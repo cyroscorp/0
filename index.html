@@ -3,36 +3,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="style.css">
-    <title>Day #15 - ToDo App | AsmrProg</title>
+    <title>Event Calendar App | AsmrProg</title>
 </head>
 
 <body>
-
-    <div class="wrapper">
-        <div class="task-input">
-            <img src="bars-icon.svg">
-            <input type="text" placeholder="Add a new task">
-        </div>
-
-        <div class="controls">
-            <div class="filters">
-                <span id="all" class="active">
-                    All
-                </span>
-                <span id="pending">Pending</span>
-                <span id="completed">Completed</span>
-            </div>
-            <button class="clear-btn">Clear All</button>
-        </div>
-        <ul class="task-box"></ul>
-
+<div class="bb">
+    <div class="planner">
+        <h1>Event Calendar</h1>
+        <div id="calendar" class="calendar-grid"></div>
     </div>
 
-    <script src="index.js"></script>
+    <button class="add-task-btn" onclick="showAddTaskModal()">Add Task</button>
+
+    <div id="addTaskModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddTaskModal()">&times;</span>
+            <h2>Add Task</h2>
+            <input type="date" id="task-date">
+            <input type="text" id="task-desc" placeholder="Task Description" autocomplete="off">
+            <button onclick="addTask()">Add Task</button>
+        </div>
+    </div>
+</div>
+
+
+    <script src="script.js"></script>
 </body>
 
 </html>
