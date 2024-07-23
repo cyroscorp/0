@@ -1,35 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Event Calendar App | AsmrProg</title>
+    <title>arjunkd</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        #website-container {
+            display: none; /* Hide initially, will be shown after space travel */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+        }
+
+        #website-container h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        #website-container p {
+            font-size: 1.5em;
+        }
+
+        #website-container a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-size: 2em;
+            display: inline-block;
+            margin-top: 20px;
+            border: 2px solid #ffcc00;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        #website-container a:hover {
+            background-color: hsl(0, 0%, 100%);
+            color: black;
+        }
+       
+    </style>
 </head>
-
 <body>
-<div class="bb">
-    <div class="planner">
-        <h1>Event Calendar</h1>
-        <div id="calendar" class="calendar-grid"></div>
+    <div id="website-container">
+        <h1>ArjunKD Inc.</h1>
+        <p>physicality is everything so wake up to reality</p>
+        <a href="i.html">Enter</a>
+      
     </div>
 
-    <button class="add-task-btn" onclick="showAddTaskModal()">Add Task</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Setup
+        let scene = new THREE.Scene();
+        let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
+        let renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-    <div id="addTaskModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAddTaskModal()">&times;</span>
-            <h2>Add Task</h2>
-            <input type="date" id="task-date">
-            <input type="text" id="task-desc" placeholder="Task Description" autocomplete="off">
-            <button onclick="addTask()">Add Task</button>
-        </div>
-    </div>
-</div>
+        // Create stars
+        let starGeometry = new THREE.BufferGeometry();
+        let starMaterial = new THREE.PointsMaterial({ 
+            color: 0xffffff,
+            size: 3,
+            sizeAttenuation: false,
+            map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/disc.png'),
+            transparent: true
+        });
+        let starVertices = [];
+        for (let i = 0; i < 20000; i++) {
+            let x = (Math.random() - 0.5) * 10000;
+            let y = (Math.random() - 0.5) * 10000;
+            let z = (Math.random() - 0.5) * 10000;
+            starVertices.push(x, y, z);
+        }
+        starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        let stars = new THREE.Points(starGeometry, starMaterial);
+        scene.add(stars);
 
+        // Create galaxies
+        function createGalaxy() {
+            let galaxyGeometry = new THREE.SphereGeometry(5, 32, 32);
+            let galaxyMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
+            let galaxy = new THREE.Mesh(galaxyGeometry, galaxyMaterial);
+            galaxy.position.set(
+                (Math.random() - 0.5) * 15000,
+                (Math.random() - 0.5) * 15000,
+                (Math.random() - 0.5) * 15000
+            );
+            return galaxy;
+        }
 
-    <script src="script.js"></script>
+        for (let i = 0; i < 100; i++) {
+            let galaxy = createGalaxy();
+            scene.add(galaxy);
+        }
+
+        // Create eternal light
+        let lightGeometry = new THREE.SphereGeometry(400, 64, 64);
+        let lightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, emissive: 0xffffff, transparent: true, opacity: 0.8 });
+        let eternalLight = new THREE.Mesh(lightGeometry, lightMaterial);
+        eternalLight.position.set(0, 0, -5000);
+        scene.add(eternalLight);
+
+        // Animation
+        camera.position.z = 1;
+        let speed = 2;
+        let zoomIn = true;
+        function animate() {
+            requestAnimationFrame(animate);
+            stars.rotation.x += 0.0003;
+            stars.rotation.y += 0.0003;
+
+            if (zoomIn) {
+                camera.position.z -= speed;
+                speed += 0.05;
+                if (camera.position.z <= -4900) {
+                    zoomIn = false;
+                    document.getElementById('website-container').style.display = 'block';
+                }
+            }
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
-
 </html>
