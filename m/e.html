@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>
+        click for quotes
+        </button>
+        
+        <div>
+        
+        </div>
+        <script>
+            let idx = 0;
+
+const poem = [
+'hamma hehehe,',
+'O pointy pointy.',
+'Anoint my head,',
+'Anointy-nointy.',
+]
+
+document.querySelector('button').addEventListener('click', () => {
+	document.querySelector('div').innerHTML = poem[idx]
+	idx = (idx + 1) % poem.length;
+
+})
+        </script>
+</body>
+</html>
