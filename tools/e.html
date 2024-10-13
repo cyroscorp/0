@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+          body{
+            background-color: black;
+            color: rgb(255, 255, 255);
+            font-size: larger;
+          }
+          .container{
+            height: 300px;
+            width: 100%;
+            
+          }
+         
+         .a{display: inline-block;
+          margin-bottom: 40px;
+    display: flex;
+    padding: 10px 20px;
+    font-size: 2em;
+    font-weight: 600;
+    border: 2px solid rgba(0,0,0,0.5);
+    border-radius: 40px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5),
+    inset 5px 5px 20px rgba(255,255,255,0.2),
+    inset -5px -5px 15px rgba(0,0,0,0.75);
+    
+
+         }
+          
+            </style>
+</head>
+<body>
+  <audio id="beepSound" src="w.mp3" preload="auto"></audio>
+        <div class="container">
+        
+        </div>
+       
+        <button class="a" id="n">
+           Click to get Quotes
+           
+            </button>
+        <script>
+           
+          const a = document.getElementById('n');
+          const beepSound = document.getElementById('beepSound');
+          a.addEventListener('click', () => {
+            beepSound.play();
+        });
+          
+          let idx = 0;
+
+const poem = [
+  'Embrace every challenge with courage and determination, knowing that each attempt, regardless of the outcome, is a step towards greatness. Every effort you make is a testament to your resilience and commitment to your dreams. Keep pushing forward, because every try brings you closer to your success!',
+'You are in danger of living a life so comfortable and soft that you will die without ever realizing your true potential,',
+'Its a lot more than mind over matter. It takes relentless self-discipline to schedule suffering into your day every day.',
+'Denial is the ultimate comfort zone,',
+'The most important conversations you’ll ever have are the ones you’ll have with yourself',
+'Dont stop when youre tired. Stop when youre done',
+'Everyone fails sometimes and life isn’t supposed to be fair, much less bend to your every whim',
+'You must recognize what you are about to do, highlight what you do not like about it, and spend time visualizing each and every obstacle you can.',
+'The ticket to victory often comes down to bringing your very best when you feel your worst',
+'Most wars are won or lost in our own heads.',
+'It may be satisfactory, but thats another word for mediocrity.',
+'Are you an experienced scuba diver? Great, shed your gear, take a deep breath and become a one-hundred-foot free diver. Are you a badass triathlete? Cool, learn how to rock climb. Are you enjoying a wildly successful career? Wonderful, learn a new language or skill. Get a second degree. Always be willing to embrace ignorance and become the dumb fuck in the classroom again, because that is the only way to expand your body of knowledge and body of work. It’s the only way to expand your mind',
+'We’re either getting better or we’re getting worse',
+'Breaking the shackles and stretching beyond our own perceived limits takes hard fucking work—oftentimes physical work—and when you put yourself on the line, self doubt and pain will greet you with a stinging combination that will buckle your knees.',
+'Always be ready to adjust, recalibrate, and stay after it to become better, somehow..',
+'If you want to master the mind and remove your governor, you’ll have to become addicted to hard work. Because passion and obsession, even talent, are only useful tools if you have the work ethic to back them up',
+'Most of us sweep our failures and evil secrets under the rug, but when we run into problems, that rug gets lifted up, and our darkness re-emerges, floods our soul, and influences the decisions which determine our character.',
+'My happiness is my reflection on the suffering during my journey and knowing that I never quit nor was I guided by anybody on this earth',
+'A lot of us surround ourselves with people who speak to our desire for comfort. People who would rather treat the pain of our wounds and prevent further injury than help us callous over them and try again. We need to surround ourselves with people who will tell us what we need to hear, not what we want to hear, but at the same time not make us feel we’re up against the impossible.',
+'The Buddha famously said that life is suffering. I’m not a Buddhist, but I know what he meant and so do you. To exist in this world, we must contend with humiliation, broken dreams, sadness, and loss. That’s just nature.',
+'We can’t control all the variables in our lives. It’s about what we do with opportunities revoked or presented to us that determine how a story ends',
+'In every failure there is something to be gained, even if it’s only practice for the next test you’ll have to take. Because that next test is coming. That’s a guarantee',
+'I knew that the confidence I’d managed to develop didn’t come from a perfect family or God-given talent. It came from personal accountability which brought me self-respect, and self-respect will always light a way forward',
+'There is no more time to waste. Hours and days evaporate like creeks in the desert. That’s why it’s okay to be cruel to yourself as long as you realize you’re doing it to become better.',
+'Be more than motivated, be more than driven, become literally obsessed to the point where people think youre fucking nuts',
+'It takes great strength to be vulnerable enough to put your ass on the line, in public, and work toward a dream that feels like it’s slipping away',
+'Human beings change through study, habit, and stories... when you’re driven, whatever is in front of you, whether it’s racism, sexism, injuries, divorce, depression, obesity, tragedy, or poverty, becomes fuel for your metamorphosis',
+'We all need small sparks, small accomplishments in our lives to fuel the big ones. Think of your small accomplishments as kindling. When you want a bonfire, you don’t start by lighting a big log. You collect some witch’s hair—a small pile of hay or some dry, dead grass. You light that, and then add small sticks and bigger sticks before you feed your tree stump into the blaze. Because it’s the small sparks, which start small fires, that eventually build enough heat to burn the whole fucking forest down.',
+'The hero is you',
+'Analyze your schedule, kill your empty habits, burn out the bullshit, and see what’s left',
+'From the time you take your first breath, you become eligible to die. You also become eligible to find your greatness and become the one warrior',
+'Nobody cares what you did yesterday. What have you done today to better yourself?',
+'If you’re willing to suffer, and I mean suffer, your brain and body once connected together, can do anything',
+'I was the sum total of the obstacles I’d overcome',
+'A warrior is a guy that goes, I’m here again today. I’ll be here again tomorrow and the next day. It’s a person who puts no limit on what’s possible.',
+'Your entitled mind is dead weight. Cut it loose. Don’t focus on what you think you deserve. Take aim on what you are willing to earn!',
+'Know why you’re in the fight to stay in the fight! And never forget that all emotional and physical anguish is finite!',
+'It’s possible to transcend anything that doesn’t kill you.',
+'Everything in life is a mind game! Whenever we get swept under by life’s dramas, large and small, we are forgetting that no matter how bad the pain gets, no matter how harrowing the torture, all bad things end',
+'People take classes on self-help, mental toughness, breathing control – the only way to get tougher is to put yourself in hellacious situations',
+'If you can get through doing things that you hate to do, on the other side is greatness',
+'The worst thing that can happen to a man is to become civilized',
+'The only thing more contagious than a good attitude is a bad one',
+'Never let people who choose the path of least resistance steer you away from your chosen path of most resistance',
+'Seeds burst from the inside out in a self-destructive ritual of new life',
+'You have to build calluses on your brain just like how you build calluses on your hands. Calluses your mind through pain and suffering',
+'I thought I’d solved a problem when really I was creating new ones by taking the path of least resistance',
+'Believe it or not, most people prefer delusion. They blame others or bad luck or chaotic circumstance',
+'You may lose the battle of the morning but don’t lose the war of the day.',
+'You can tolerate doubt as a backseat driver, but if you put doubt in the pilot’s seat, defeat is guaranteed',
+'Suffering is a test. That’s all it is. Suffering is the true of life',
+'A lot of us don’t know about another world that exists for us because it’s on the other side of suffering. That’s the real growth in life',
+'Be true to whoever or whatever you are, wear it like a badge of honor. Fit in with one person and one person only, yourself',
+'True happiness is to enjoy the present, without anxious dependence upon the future, not to amuse ourselves with either hopes or fears but to rest satisfied with what we have, which is sufficient, for he that is so wants nothing. The greatest blessings of mankind are within us and within our reach. A wise man is content with his lot, whatever it may be, without wishing for what he has not',
+'We suffer more often in imagination than in reality',
+'Religion is regarded by the common people as true, by the wise as false, and by rulers as useful',
+'Difficulties strengthen the mind, as labor does the body',
+'You act like mortals in all that you fear, and like immortals in all that you desire',
+'It is not the man who has too little, but the man who craves more, that is poor',
+'It is the power of the mind to be unconquerable..',
+'If you really want to escape the things that harass you, what you’re needing is not to be in a different place but to be a different person.',
+'He who is brave is free',
+'Until we have begun to go without them, we fail to realize how unnecessary many things are. Weve been using them not because we needed them but because we had them.',
+'Begin at once to live, and count each separate day as a separate life',
+'What need is there to weep over parts of life? The whole of it calls for tears.',
+'They lose the day in expectation of the night, and the night in fear of the dawn.',
+'He suffers more than necessary, who suffers before it is necessary.',
+'I shall never be ashamed of citing a bad author if the line is good.',
+'Only time can heal what reason cannot',
+'If you live in harmony with nature you will never be poor; if you live according what others think, you will never be rich',
+'Putting things off is the biggest waste of life: it snatches away each day as it comes, and denies us the present by promising the future. The greatest obstacle to living is expectancy, which hangs upon tomorrow, and loses today. You are arranging what lies in Fortunes control, and abandoning what lies in yours. What are you looking at? To what goal are you straining? The whole future lies in uncertainty live immediately',
+'Ignorance is the cause of fear.',
+
+
+
+
+]
+
+document.querySelector('button').addEventListener('click', () => {
+	document.querySelector('div').innerHTML = poem[idx]
+	idx = (idx + 1) % poem.length;
+
+})
+        </script>
+</body>
+</html>

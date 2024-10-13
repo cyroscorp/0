@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#2d89ef" />
+    <meta name="theme-color" content="#ffffff" />
+    <style>
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff9494;
+    font-family: "Inter", sans-serif;
+    background-color: #000000;
+}
+
+.wrapper {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    padding: 30px 0;
+    display: flex;
+}
+
+@media (min-width:768px) {
+    .wrapper {
+        height: 50rem;
+        width: 25rem;
+        border-radius: 40px;
+        border: 10px solid #000000;
+    }
+}
+
+.wrapper .screen {
+    min-width: 100%;
+    flex: 1;
+    transition: all 0.3s;
+}
+
+.wrapper.show-category .home-screen {
+    transform: translateX(-100%);
+}
+
+.wrapper.show-category .category-screen {
+    transform: translateX(-100%);
+}
+
+.wrapper.show-category .screen-backdrop {
+    transform: translate(-50%, -60%)
+}
+
+.head-wrapper {
+    padding: 0 30px;
+}
+
+.menu-btn {
+    width: 2rem;
+    cursor: pointer;
+    color: #ffadad;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    color: #9d9d9d;
+}
+
+.welcome h1 {
+    font-size: 1.5rem;
+}
+
+.welcome p {
+    font-weight: 500;
+}
+
+.welcome .img {
+    position: relative;
+}
+
+.welcome .img .backdrop {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3.8rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: #696969;
+    z-index: -1;
+}
+
+.welcome .img img {
+    width: 5rem;
+}
+
+.categories-wrapper {
+    margin-top: 1rem;
+    padding: 0 30px;
+    height: calc(100% - 8rem);
+    padding-bottom: 20px;
+    overflow: auto;
+}
+
+.categories {
+    padding-top: rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.category {
+    background: #4f4f4f;
+    border-radius: 0.5rem;
+    padding: 2rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 10px 20px 5px #cac5c523;
+    transition: all 0.3s;
+
+}
+
+
+.category .left {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.category .left img {
+    width: 3rem;
+}
+
+.category .content h1 {
+    font-size: 1.5rem;
+}
+
+.category .content p {
+    color: #ffffff;
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+.category .options {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.category:hover .options {
+    opacity: 1;
+    visibility: visible;
+}
+
+.category .toggle-btn {
+    width: 2rem;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.category .toggle-btn:hover {
+    opacity: 1;
+}
+
+
+/* Category Screen */
+.category-screen .head-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-screen .head-wrapper svg {
+    width: 2rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+.category-details {
+    padding: 0 30px;
+    margin-top: 7rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.category-details img {
+    width: 4rem;
+}
+
+.category-details .details p {
+    opacity: 0.6;
+}
+
+/* tasks */
+.tasks-wrapper {
+    padding: 0 30px;
+    margin-top: 1rem;
+    height: calc(100% - 12rem);
+    padding-bottom: 20px;
+    overflow: auto;
+}
+
+.tasks {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.task-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.task {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 500;
+    width: max-content;
+    cursor: pointer;
+}
+
+
+.task input {
+    display: none;
+}
+
+.task .checkmark {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 2px;
+    border: 1px solid #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task .checkmark svg {
+    width: 1rem;
+    color: #2e2e2e;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+
+
+.task .checkmark svg path {
+    stroke-width: 3;
+}
+
+.task input:checked~.checkmark {
+    background-color: #2e2e2e;
+}
+
+.task input:checked~.checkmark svg {
+    opacity: 1;
+    color: #fff;
+}
+
+.task input:checked~p {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.task-wrapper .delete {
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    color: #ffffff;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.031);
+    opacity: 100;
+   
+   
+}
+
+
+.task-wrapper .delete:hover {
+    color: red;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.no-tasks {
+    margin-top: 5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    opacity: 0.6;
+}
+
+/* Add Task */
+.add-task-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff8787;
+    transition: all 3s;
+}
+
+
+.add-task-btn.active {
+    z-index: 1;
+    bottom: 20rem;
+    transform: rotate(5000deg);
+}
+
+.add-task-btn svg {
+    width: 2rem;
+    color: #ffffff;
+}
+
+.add-task {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    padding: 20px 30px;
+    transition: all 2s;
+}
+
+.add-task.active {
+    bottom: 0;
+}
+
+.add-task .heading {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input,
+.input-group label {
+    display: block;
+    width: 100%;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.input-group label {
+    width: max-content;
+    padding: 0 5px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.btns button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s;
+    z-index: 1;
+}
+
+button.add-btn {
+    background-color: #ffffff;
+    color: #000000
+}
+
+.add-task-backdrop {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 135%;
+    height: 20rem;
+    border-radius: 50% 50% 0 0;
+    background-color: #646464;
+}
+
+.black-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    background-color: #00000023;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 3s;
+}
+
+.black-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+      
+    </style>
+    
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="screen-backdrop"></div>
+      <div class="home-screen screen">
+        <div class="head-wrapper">
+          <div class="menu-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
+              />
+            </svg>
+          </div>
+          <div class="welcome">
+            <div class="content">
+              <h1>Hello Warrior</h1>
+              <p>just accomplish <span id="total-tasks"></span> tasks to reach greatness</p>
+           
+            </div>
+            <div class="img">
+              <div class="backdrop"></div>
+              <img src="images/boy.png" alt="" />
+            </div>
+          </div>
+        </div>
+        <div class="categories-wrapper">
+          <div class="categories">
+            <div class="category">
+              <div class="left">
+                <img src="images/boy.png" alt="sun" />
+                <div class="content">
+                  <h1>innerdev</h1>
+                  <p>5 Tasks</p>
+                </div>
+              </div>
+              <div class="options">
+                <div class="toggle-btn">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="category-screen screen">
+        <div class="head-wrapper">
+          <div class="back-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+              />
+            </svg>
+          </div>
+          <div class="options">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div class="category-details">
+          <img src="images/boy.png" alt="" id="category-img" />
+          <div class="details">
+            <p id="num-tasks"></p>
+            <h1 id="category-title"></h1>
+          </div>
+        </div>
+        <div class="tasks-wrapper">
+          <div class="tasks">
+            <div class="task-wrapper">
+              <label for="task" class="task">
+                <input type="checkbox" name="task" id="task" />
+                <span class="checkmark"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M4.5 12.75l6 6 9-13.5"
+                    />
+                  </svg>
+                </span>
+                <p>Buy a new car lorem</p>
+              </label>
+              <div class="delete">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="add-task-btn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 4.5v15m7.5-7.5h-15"
+          />
+        </svg>
+      </div>
+      <div class="black-backdrop"></div>
+      <div class="add-task">
+        <div class="add-task-backdrop"></div>
+        <h1 class="heading"></h1>
+        <div class="input-group">
+          <label for="task-input"> Task </label>
+          <input type="text" id="task-input" required />
+        </div>
+        <div class="input-group">
+          <label for="category-select"> Category </label>
+          <select id="category-select"></select>
+        </div>
+        <div class="btns">
+          <button class="cancel-btn">Cancel</button>
+          <button class="add-btn">Add</button>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <script>
+let categories = [
+{
+    title: "Ethics",
+    img: "5.png",
+  },
+  {
+    title: "Creation",
+    img: "3.png",
+  },
+  {
+    title: "innerdev",
+    img: "boy.png",
+  },
+  {
+    title: "Excercise",
+    img: "1.png",
+  },
+  {
+    title: "Spirituality",
+    img: "4.png",
+  },
+  {
+    title: "Social",
+    img: "2.png",
+  },
+ 
+ 
+ 
+
+  {
+    title: "miscellaneous",
+    img: "a.png",
+  },
+
+
+];
+
+let tasks = [
+  {
+    id: 1,
+    task: "institution",
+    category: "ethics",
+    completed: false,
+  },
+  {
+    id: 2,
+    task: "incomigs",
+    category: "ethics",
+    completed: false,
+  },
+  {
+    id: 3,
+    task: "course certification",
+    category: "Ethics",
+    completed: false,
+  },
+  {
+    id: 4,
+    task: "web development",
+    category: "Creation",
+    completed: false,
+  },
+  {
+    id: 5,
+    task: "vid create",
+    category: "creation",
+    completed: false,
+  },
+  {
+    id: 6,
+    task: "post create",
+    category: "creation",
+    completed: false,
+  },
+  {
+    id: 7,
+    task: "side projects tutorial learn+create",
+    category: "innerdev",
+    completed: false,
+  },
+  {
+    id: 8,
+    task: "read book",
+    category: "innerdev",
+    completed: false,
+  },
+  {
+    id: 9,
+    task: "write explanations",
+    category: "innerdev",
+    completed: false,
+  },
+  {
+    id: 10,
+    task: "blogs on platforms",
+    category: "innerdev",
+    completed: false,
+  },
+  {
+    id: 11,
+    task: "eyedoc",
+    category: "excercise",
+    completed: false,
+  },
+  {
+    id: 12,
+    task: "neck crunches",
+    category: "excercise",
+    completed: false,
+  },
+  {
+    id: 13,
+    task: "pushups",
+    category: "Excercise",
+    completed: false,
+  },
+  {
+    id: 14,
+    task: "liftups",
+    category: "Excercise",
+    completed: false,
+  },
+  {
+    id: 15,
+    task: "crunches",
+    category: "Excercise",
+    completed: false,
+  },
+  {
+    id: 16,
+    task: "plank",
+    category: "Excercise",
+    completed: false,
+  },
+  // Additional tasks for each category
+  {
+    id: 17,
+    task: "squats",
+    category: "Excercise",
+    completed: false,
+  },
+  {
+    id: 18,
+    task: "climbobj",
+    category: "Excercise",
+    completed: false,
+  },
+  {
+    id: 19,
+    task: "vedant and gita old lec",
+    category: "Spirituality",
+    completed: false,
+  },
+  
+  // Add more tasks for each category as desired
+];
+
+// Define functions
+const saveLocal = () => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+const getLocal = () => {
+  const tasksLocal = JSON.parse(localStorage.getItem("tasks"));
+  if (tasksLocal) {
+    tasks = tasksLocal;
+  }
+};
+
+const toggleScreen = () => {
+  screenWrapper.classList.toggle("show-category");
+};
+
+const updateTotals = () => {
+  const categoryTasks = tasks.filter(
+    (task) =>
+      task.category.toLowerCase() === selectedCategory.title.toLowerCase()
+  );
+  numTasks.innerHTML = `${categoryTasks.length} Tasks`;
+  totalTasks.innerHTML = tasks.length;
+};
+
+const renderCategories = () => {
+  categoriesContainer.innerHTML = "";
+  categories.forEach((category) => {
+    const categoryTasks = tasks.filter(
+      (task) => task.category.toLowerCase() === category.title.toLowerCase()
+    );
+    const div = document.createElement("div");
+    div.classList.add("category");
+    div.addEventListener("click", () => {
+      screenWrapper.classList.toggle("show-category");
+      selectedCategory = category;
+      updateTotals();
+      categoryTitle.innerHTML = category.title;
+      categoryImg.src = `images/${category.img}`;
+      renderTasks();
+    });
+
+    div.innerHTML = `
+                  <div class="left">
+                <img src="images/${category.img}"
+                 alt="${category.title}"
+                  />
+                <div class="content">
+                  <h1>${category.title}</h1>
+                  <p>${categoryTasks.length} Tasks</p>
+                </div>
+              </div>
+              <div class="options">
+                <div class="toggle-btn">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+    `;
+
+    categoriesContainer.appendChild(div);
+  });
+};
+
+const renderTasks = () => {
+  tasksContainer.innerHTML = "";
+  const categoryTasks = tasks.filter(
+    (task) =>
+      task.category.toLowerCase() === selectedCategory.title.toLowerCase()
+  );
+  if (categoryTasks.length === 0) {
+    tasksContainer.innerHTML = `<p class="no-tasks">No tasks added for this category</p>`;
+  } else {
+    categoryTasks.forEach((task) => {
+      const div = document.createElement("div");
+      div.classList.add("task-wrapper");
+      const label = document.createElement("label");
+      label.classList.add("task");
+      label.setAttribute("for", task.id);
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = task.id;
+      checkbox.checked = task.completed;
+      checkbox.addEventListener("change", () => {
+        const index = tasks.findIndex((t) => t.id === task.id);
+        tasks[index].completed = !tasks[index].completed;
+        saveLocal();
+      });
+      div.innerHTML = `
+      <div class="delete">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                  />
+                </svg>
+              </div>
+              `;
+      label.innerHTML = `
+              <span class="checkmark"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4.5 12.75l6 6 9-13.5"
+                  />
+                </svg>
+              </span>
+              <p>${task.task}</p>
+        `;
+      label.prepend(checkbox);
+      div.prepend(label);
+      tasksContainer.appendChild(div);
+
+      const deleteBtn = div.querySelector(".delete");
+      deleteBtn.addEventListener("click", () => {
+        const index = tasks.findIndex((t) => t.id === task.id);
+        tasks.splice(index, 1);
+        saveLocal();
+        renderTasks();
+      });
+    });
+
+    renderCategories();
+    updateTotals();
+  }
+};
+
+const toggleAddTaskForm = () => {
+  addTaskWrapper.classList.toggle("active");
+  blackBackdrop.classList.toggle("active");
+  addTaskBtn.classList.toggle("active");
+};
+
+const addTask = (e) => {
+  e.preventDefault();
+  const task = taskInput.value;
+  const category = categorySelect.value;
+
+  if (task === "") {
+    alert("Please enter a task");
+  } else {
+    const newTask = {
+      id: tasks.length + 1,
+      task,
+      category,
+      completed: false,
+    };
+    taskInput.value = "";
+    tasks.push(newTask);
+    saveLocal();
+    toggleAddTaskForm();
+    renderTasks();
+  }
+};
+
+// Initialize variables and DOM elements
+let selectedCategory = categories[0];
+const categoriesContainer = document.querySelector(".categories");
+const screenWrapper = document.querySelector(".wrapper");
+const menuBtn = document.querySelector(".menu-btn");
+const backBtn = document.querySelector(".back-btn");
+const tasksContainer = document.querySelector(".tasks");
+const numTasks = document.getElementById("num-tasks");
+const categoryTitle = document.getElementById("category-title");
+const categoryImg = document.getElementById("category-img");
+const categorySelect = document.getElementById("category-select");
+const addTaskWrapper = document.querySelector(".add-task");
+const addTaskBtn = document.querySelector(".add-task-btn");
+const taskInput = document.getElementById("task-input");
+const blackBackdrop = document.querySelector(".black-backdrop");
+const addBtn = document.querySelector(".add-btn");
+const cancelBtn = document.querySelector(".cancel-btn");
+const totalTasks = document.getElementById("total-tasks");
+
+// Attach event listeners
+menuBtn.addEventListener("click", toggleScreen);
+backBtn.addEventListener("click", toggleScreen);
+addTaskBtn.addEventListener("click", toggleAddTaskForm);
+blackBackdrop.addEventListener("click", toggleAddTaskForm);
+addBtn.addEventListener("click", addTask);
+cancelBtn.addEventListener("click", toggleAddTaskForm);
+
+// Render initial state
+getLocal();
+renderTasks();
+categories.forEach((category) => {
+  const option = document.createElement("option");
+  option.value = category.title.toLowerCase();
+  option.textContent = category.title;
+  categorySelect.appendChild(option);
+});
+
+
+    </script>
+  </body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>arjunkd</title>
+    <title>AKDimensia</title>
     <style>
         body, html {
             margin: 0;
@@ -11,9 +11,9 @@
             overflow: hidden;
             width: 100%;
             height: 100%;
-            background-color: black;
+            background-color: rgb(0, 0, 0);
             font-family: Arial, sans-serif;
-            color: white;
+            color: rgb(0, 0, 0);
         }
 
         #website-container {
@@ -36,33 +36,49 @@
         }
 
         #website-container a {
-            color: #ffcc00;
+            color: #000000;
             text-decoration: none;
             font-size: 2em;
             display: inline-block;
             margin-top: 20px;
-            border: 2px solid #ffcc00;
+            border: 2px solid #000000;
             padding: 10px 20px;
             transition: all 0.3s ease;
         }
+        .circle::before
+{    
+    content: '';
+    position:absolute;
+   bottom: 8%;
+   right: 5%;
+  z-index: -1;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: var(--clr);
+    box-shadow: 0 0 50px var(--clr),
+    0 0 50px var(--clr)
+}
 
-        #website-container a:hover {
-            background-color: hsl(0, 0%, 100%);
-            color: black;
-        }
+      
        
     </style>
 </head>
 <body>
+   
+   
     <div id="website-container">
-        <h1>ArjunKD Inc.</h1>
-        <p>physicality is everything so wake up to reality</p>
-        <a href="if.html">Enter</a>
+        <div class="circle circle2" id="mn" style="--clr:#fff"><i></i></div>
+        <h1>AKDimensia</h1>
+        <h3>Crafted by AKD</h3>
+       
+        <a href="b.html">Enter</a>
       
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+       
         // Setup
         let scene = new THREE.Scene();
         let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
@@ -76,7 +92,7 @@
             color: 0xffffff,
             size: 3,
             sizeAttenuation: false,
-            map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/disc.png'),
+            map: new THREE.TextureLoader().load('b.png'),
             transparent: true
         });
         let starVertices = [];
@@ -93,7 +109,7 @@
         // Create galaxies
         function createGalaxy() {
             let galaxyGeometry = new THREE.SphereGeometry(5, 32, 32);
-            let galaxyMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
+            let galaxyMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
             let galaxy = new THREE.Mesh(galaxyGeometry, galaxyMaterial);
             galaxy.position.set(
                 (Math.random() - 0.5) * 15000,
@@ -109,8 +125,8 @@
         }
 
         // Create eternal light
-        let lightGeometry = new THREE.SphereGeometry(400, 64, 64);
-        let lightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, emissive: 0xffffff, transparent: true, opacity: 0.8 });
+        let lightGeometry = new THREE.SphereGeometry(14, 64, 64);
+        let lightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, emissive: 0xffffff, transparent: true, opacity: 1 });
         let eternalLight = new THREE.Mesh(lightGeometry, lightMaterial);
         eternalLight.position.set(0, 0, -5000);
         scene.add(eternalLight);
@@ -122,7 +138,7 @@
         function animate() {
             requestAnimationFrame(animate);
             stars.rotation.x += 0.0003;
-            stars.rotation.y += 0.0003;
+            stars.rotation.y += -0.0003;
 
             if (zoomIn) {
                 camera.position.z -= speed;
@@ -130,6 +146,7 @@
                 if (camera.position.z <= -4900) {
                     zoomIn = false;
                     document.getElementById('website-container').style.display = 'block';
+                   
                 }
             }
 
@@ -143,6 +160,47 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
+        
+        
+        const cockpit = document.createElement('div');
+        cockpit.id = 'cockpit';
+        cockpit.style.position = 'fixed';
+        cockpit.style.bottom = '0';
+        cockpit.style.left = '0';
+        cockpit.style.width = '100%';
+        cockpit.style.backgroundColor = '#333';
+        cockpit.style.color = 'white';
+        cockpit.style.textAlign = 'center';
+        cockpit.style.padding = '20px';
+        cockpit.style.boxShadow = '0 -2px 5px rgba(0, 0, 0, 0.5)';
+        cockpit.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        cockpit.style.transform = 'translateY(100%)';
+        cockpit.style.opacity = '0';
+
+        // Create content for the cockpit
+        const heading = document.createElement('h3');
+        heading.textContent = 'Msg fromCaptain Arjun : spaceship out of fuel';
+        cockpit.appendChild(heading);
+
+
+
+        // Append cockpit to the body
+        document.body.appendChild(cockpit);
+
+        // Function to show the cockpit
+        function showCockpit() {
+            cockpit.style.transform = 'translateY(0)';
+            cockpit.style.opacity = '1';
+
+            // Hide the cockpit after 2 seconds
+            setTimeout(() => {
+                cockpit.style.transform = 'translateY(100%)';
+                cockpit.style.opacity = '0';
+            }, 2500);
+        }
+
+        // Show the cockpit when the page loads
+        window.addEventListener('load', showCockpit);
     </script>
 </body>
 </html>
