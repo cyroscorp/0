@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Chat</title>
+    <title>Chat Application</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,54 +16,70 @@
         }
         .chat-container {
             background-color: #fff;
-            width: 300px;
+            width: 400px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px;
             display: flex;
             flex-direction: column;
-            height: 400px;
-            overflow: hidden;
+            height: 500px;
         }
-        .messages {
+        .message-list-container {
             flex: 1;
             overflow-y: auto;
-            margin-bottom: 10px;
-            padding: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .message-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
         }
         .message {
             background-color: #f1f1f1;
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-bottom: 5px;
-        }
-        input[type="text"] {
             padding: 10px;
-            width: calc(100% - 20px);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .own-message {
+            background-color: #d1e7dd;
+            text-align: right;
+        }
+        .sender {
+            font-weight: bold;
+        }
+        .message-input-container {
+            display: flex;
+            padding: 10px;
+        }
+        .message-input {
+            flex: 1;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            margin-bottom: 5px;
+            margin-right: 10px;
         }
-        button {
+        .send-message {
             padding: 10px;
             background-color: #4CAF50;
-            color: #fff;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #45a049;
+        .send-message:disabled {
+            background-color: #ccc;
         }
     </style>
 </head>
 <body>
     <div class="chat-container">
-        <div class="messages" id="messages"></div>
-        <input type="text" id="messageInput" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
+        <div class="message-list-container" id="messageListContainer">
+            <ul class="message-list" id="messageList"></ul>
+        </div>
+        <form id="messageInputForm" class="message-input-container">
+            <input type="text" id="messageInput" placeholder="Enter a message" class="message-input" required />
+            <button type="submit" class="send-message">Send</button>
+        </form>
     </div>
 
     <!-- Firebase SDK -->
@@ -88,42 +104,52 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
+        const messageListContainer = document.getElementById("messageListContainer");
+        const messageList = document.getElementById("messageList");
+        const messageInputForm = document.getElementById("messageInputForm");
+        const messageInput = document.getElementById("messageInput");
+
         // Function to send a message
-        function sendMessage() {
-            const messageInput = document.getElementById("messageInput");
-            const messageText = messageInput.value;
-
-            if (messageText === "") {
-                alert("Please enter a message.");
-                return;
-            }
-
-            // Push the message to the Firebase Realtime Database
+        function sendMessage(user, messageText) {
             const messagesRef = ref(database, "messages");
             push(messagesRef, {
+                uid: user.uid,
+                displayName: user.displayName || "Anonymous",
                 text: messageText,
                 timestamp: Date.now()
             });
-
-            // Clear the input field
-            messageInput.value = "";
         }
 
         // Function to display messages
-        function displayMessage(messageText) {
-            const messagesDiv = document.getElementById("messages");
-            const messageElement = document.createElement("div");
-            messageElement.classList.add("message");
-            messageElement.textContent = messageText;
-            messagesDiv.appendChild(messageElement);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll to the bottom
+        function displayMessage(message) {
+            const messageElement = document.createElement("li");
+            messageElement.className = "message " + (message.uid === user.uid ? "own-message" : "");
+            messageElement.innerHTML = `<h4 class="sender">${message.uid === user.uid ? 'You' : message.displayName}</h4><div>${message.text}</div>`;
+            messageList.appendChild(messageElement);
+            messageListContainer.scrollTop = messageListContainer.scrollHeight; // Scroll to the bottom
         }
 
         // Listen for new messages added to the database
         const messagesRef = ref(database, "messages");
         onChildAdded(messagesRef, (data) => {
             const message = data.val();
-            displayMessage(message.text);
+            displayMessage(message);
+        });
+
+        // Dummy user for demonstration
+        const user = {
+            uid: "user1", // Unique user ID
+            displayName: "User" // User display name
+        };
+
+        // Handle message input form submission
+        messageInputForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const messageText = messageInput.value.trim();
+            if (messageText) {
+                sendMessage(user, messageText);
+                messageInput.value = "";
+            }
         });
     </script>
 </body>
